@@ -55,6 +55,10 @@ public class Detalle implements CrudOperationBLL {
 		this.venta = venta;
 	}
 
+	public static Detalle get(int id){
+		return DetalleDAL.get(id);
+	}
+
 	@Override
 	public boolean guardar() {
 		boolean s = false;

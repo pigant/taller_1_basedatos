@@ -7,6 +7,7 @@ package com.ignacio.tienda.BLL;
 
 import com.ignacio.tienda.DAL.VentaDAL;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -14,6 +15,7 @@ import java.util.ArrayList;
  */
 public class Venta implements CrudOperationBLL {
 
+	private static HashMap<Integer, Venta> ventas = new HashMap();
 	private Integer idVenta;
 	private Cliente c;
 	private ArrayList<Detalle> d;
@@ -28,7 +30,7 @@ public class Venta implements CrudOperationBLL {
 		this.c = c;
 	}
 
-	public void addDetalle(final Detalle detalle){
+	public void addDetalle(final Detalle detalle) {
 		actualizar = true;
 		d.add(detalle);
 	}
@@ -71,7 +73,22 @@ public class Venta implements CrudOperationBLL {
 	}
 
 	public static Venta get(final int id) {
-		return VentaDAL.get(id);
+		return get(id, true);
+	}
+
+	public static Venta get(final int id, final boolean cache) {
+		Venta v;
+		if (cache) {
+			if (ventas.containsKey(id)) {
+				v = ventas.get(id);
+			} else {
+				v = VentaDAL.get(id);
+				ventas.put(id, v);
+			}
+		} else {
+			v = VentaDAL.get(id);
+		}
+		return v;
 	}
 
 }

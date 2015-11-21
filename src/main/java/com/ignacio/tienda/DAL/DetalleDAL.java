@@ -1,14 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ignacio.tienda.DAL;
 
+import com.ignacio.tienda.BLL.Comic;
 import com.ignacio.tienda.BLL.Detalle;
+import com.ignacio.tienda.BLL.Venta;
 import com.ignacio.tienda.DAL.exception.CodigoRepetidoException;
 import com.ignacio.tienda.DAL.exception.SinBaseDatosException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,7 +17,26 @@ import java.util.logging.Logger;
 public class DetalleDAL {
 
 	public static Detalle get(int id) {
-		throw new UnsupportedOperationException("No implementado");
+		Detalle d = null;
+		BD bd;
+		try {
+			bd = new BD();
+			ArrayList<Object[]> a = bd.select("detalle", "idDetalle=" + id,
+					"idDetalle",
+					"id_venta",
+					"codigoComic"
+			);
+			for (Object[] o : a) {
+				d = new Detalle(
+						(int) o[0],
+						Comic.get((int) o[2]),
+						Venta.get((int) o[1])
+				);
+			}
+		} catch (SinBaseDatosException ex) {
+			Logger.getLogger(DetalleDAL.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return d;
 	}
 
 	public Integer guardar(int idVenta, int codigoComic) {

@@ -7,6 +7,8 @@ package com.ignacio.tienda.BLL;
 
 import com.ignacio.tienda.DAL.ClienteDAL;
 import com.ignacio.tienda.DAL.exception.CodigoRepetidoException;
+import java.util.HashMap;
+import java.util.Objects;
 
 /**
  *
@@ -14,6 +16,7 @@ import com.ignacio.tienda.DAL.exception.CodigoRepetidoException;
  */
 public class Cliente {
 
+	private static HashMap<Integer, Cliente> clientes = new HashMap();
 	private int rut;
 	private int rutPrevio;
 	private String nombre;
@@ -29,7 +32,23 @@ public class Cliente {
 	}
 
 	public static Cliente get(int rut) {
-		return ClienteDAL.get(rut);
+		return get(rut, true);
+	}
+
+	public static Cliente get(int rut, boolean cache) {
+		Cliente c;
+		if (cache) {
+			if (clientes.containsKey(rut)) {
+				c = clientes.get(rut);
+			} else {
+				c = ClienteDAL.get(rut);
+				clientes.put(rut, c);
+			}
+
+		} else {
+			c = ClienteDAL.get(rut);
+		}
+		return c;
 	}
 
 	public boolean guardar() throws CodigoRepetidoException {
@@ -72,6 +91,33 @@ public class Cliente {
 		return "Cliente{" + "rut=" + rut + ", nombre=" + nombre + '}';
 	}
 
-	
+	@Override
+	public int hashCode() {
+		int hash = 5;
+		hash = 97 * hash + this.rut;
+		hash = 97 * hash + Objects.hashCode(this.nombre);
+		return hash;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final Cliente other = (Cliente) obj;
+		if (this.rut != other.rut) {
+			return false;
+		}
+		if (!Objects.equals(this.nombre, other.nombre)) {
+			return false;
+		}
+		return true;
+	}
 
 }

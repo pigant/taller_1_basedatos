@@ -6,16 +6,19 @@
 package com.ignacio.tienda.BLL;
 
 import com.ignacio.tienda.DAL.ComicDAL;
+import java.util.HashMap;
+import java.util.Objects;
 
 /**
  *
  * @author ignacio
  */
-public class Comic implements CrudOperationBLL{
+public class Comic implements CrudOperationBLL {
 
-	Integer codigo;
-	String nombre;
-	int numero;
+	private static HashMap<Integer, Comic> comics;
+	private Integer codigo;
+	private String nombre;
+	private int numero;
 
 	public Comic() {
 	}
@@ -32,7 +35,22 @@ public class Comic implements CrudOperationBLL{
 	}
 
 	public static Comic get(int codigo) {
-		return ComicDAL.get(codigo);
+		return get(codigo, true);
+	}
+
+	public static Comic get(int codigo, boolean cache) {
+		Comic c;
+		if (cache) {
+			if (comics.containsKey(codigo)) {
+				c = comics.get(codigo);
+			} else {
+				c = ComicDAL.get(codigo);
+				comics.put(codigo, c);
+			}
+		} else {
+			c = ComicDAL.get(codigo);
+		}
+		return c;
 	}
 
 	@Override
@@ -88,6 +106,39 @@ public class Comic implements CrudOperationBLL{
 	@Override
 	public String toString() {
 		return "Comic{" + "codigo=" + codigo + ", nombre=" + nombre + ", numero=" + numero + '}';
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = 7;
+		hash = 37 * hash + Objects.hashCode(this.codigo);
+		hash = 37 * hash + Objects.hashCode(this.nombre);
+		hash = 37 * hash + this.numero;
+		return hash;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final Comic other = (Comic) obj;
+		if (this.numero != other.numero) {
+			return false;
+		}
+		if (!Objects.equals(this.nombre, other.nombre)) {
+			return false;
+		}
+		if (!Objects.equals(this.codigo, other.codigo)) {
+			return false;
+		}
+		return true;
 	}
 
 }
