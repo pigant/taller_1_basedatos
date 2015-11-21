@@ -88,7 +88,15 @@ public class Detalle implements CrudOperationBLL {
 
 	@Override
 	public boolean borrar() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		boolean s = false;
+		LOG.log(Level.FINE, "Eliminando el detalle {0}", this);
+		s = new DetalleDAL().borrar(idDetalle);
+		if (s) {
+			LOG.log(Level.INFO, "Detalle eliminado {0}", this);
+		} else {
+			LOG.log(Level.FINE, "El detalle no fue eliminado");
+		}
+		return s;
 	}
 
 	@Override

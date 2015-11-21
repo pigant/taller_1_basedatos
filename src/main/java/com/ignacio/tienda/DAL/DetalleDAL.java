@@ -54,8 +54,22 @@ public class DetalleDAL {
 			bd = new BD();
 			s = bd.update("update detalle "
 					+ "set id_venta=?, codigoComic=? "
-					+ "where idDetalle=? ", 
+					+ "where idDetalle=? ",
 					idVenta, codigo, idDetalle);
+		} catch (SinBaseDatosException ex) {
+			Logger.getLogger(DetalleDAL.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (CodigoRepetidoException ex) {
+			Logger.getLogger(DetalleDAL.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return s;
+	}
+
+	public boolean borrar(final int idDetalle) {
+		boolean s = false;
+		BD bd;
+		try {
+			bd = new BD();
+			s = bd.update("delete from detalle where idDetalle=?", idDetalle);
 		} catch (SinBaseDatosException ex) {
 			Logger.getLogger(DetalleDAL.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (CodigoRepetidoException ex) {
