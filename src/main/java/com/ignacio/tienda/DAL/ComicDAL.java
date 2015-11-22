@@ -53,7 +53,7 @@ public class ComicDAL {
 		try {
 			bd = new BD();
 			ResultSet r = bd.createStatement().executeQuery(
-					"select codigo, nombre, numero from codigo");
+					"select codigo, nombre, numero from comic");
 			while (r.next()) {
 				ac.add(new Comic(r.getInt("codigo"),
 						r.getString("nombre"),

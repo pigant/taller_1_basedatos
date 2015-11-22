@@ -6,7 +6,11 @@
 package com.ignacio.tienda.GUI.Ventanas;
 
 import com.ignacio.tienda.BLL.Comic;
+import java.util.ArrayList;
+import javax.swing.AbstractListModel;
 import javax.swing.DefaultListModel;
+import javax.swing.ListModel;
+import javax.swing.event.ListDataListener;
 
 /**
  *
@@ -14,14 +18,18 @@ import javax.swing.DefaultListModel;
  */
 public class JPIngresoVenta extends javax.swing.JPanel {
 
+	ComicsUtil cu;
+	ComicsUtil cv;
+
 	/**
 	 * Creates new form JPIngresoVenta
 	 */
 	public JPIngresoVenta() {
 		initComponents();
-		DefaultListModel<ComicsUtil> dlm = new DefaultListModel<>();
-
-		dlm.add(element);
+		cu = new ComicsUtil(Comic.getAll());
+		cv = new ComicsUtil(new ArrayList<Comic>());
+		jL_bodega.setModel(cu);
+		jL_compra.setModel(cv);
 	}
 
 	/**
@@ -94,6 +102,11 @@ public class JPIngresoVenta extends javax.swing.JPanel {
         jScrollPane2.setViewportView(jL_compra);
 
         jB_traspaso.setText("-->");
+        jB_traspaso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jB_traspasoActionPerformed(evt);
+            }
+        });
 
         jB_compra.setText("Vender");
 
@@ -139,6 +152,12 @@ public class JPIngresoVenta extends javax.swing.JPanel {
         add(jPanel2, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jB_traspasoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jB_traspasoActionPerformed
+		int index = jL_bodega.getSelectedIndex();
+		Comic c = cu.getComic(index);
+		cv.add(c);
+    }//GEN-LAST:event_jB_traspasoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jB_compra;
@@ -158,17 +177,31 @@ public class JPIngresoVenta extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 }
 
-class ComicsUtil {
+class ComicsUtil extends AbstractListModel<String> {
 
-	private final Comic c;
+	ArrayList<Comic> c;
 
-	public ComicsUtil(Comic c) {
+	public ComicsUtil(ArrayList<Comic> c) {
 		this.c = c;
 	}
 
+	public void add(Comic c) {
+		this.c.add(c);
+		this.fireContentsChanged(this, 0, this.c.size());
+	}
+
+	public Comic getComic(int index){
+		return this.c.get(index);
+	}
+
 	@Override
-	public String toString() {
-		return c.getNombre();
+	public int getSize() {
+		return c.size();
+	}
+
+	@Override
+	public String getElementAt(int index) {
+		return c.get(index).getNombre();
 	}
 
 }
