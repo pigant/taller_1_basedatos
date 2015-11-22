@@ -7,6 +7,9 @@ package TestBll;
 
 import com.ignacio.tienda.BLL.Cliente;
 import com.ignacio.tienda.BLL.Comic;
+import com.ignacio.tienda.BLL.Detalle;
+import com.ignacio.tienda.BLL.Venta;
+import com.ignacio.tienda.BLL.VentaBuilder;
 import com.ignacio.tienda.DAL.exception.CodigoRepetidoException;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -79,5 +82,26 @@ public class ComicTest {
 		System.out.println(ct);
 		//borrado
 		assertTrue("No se pude borrar", c.borrar());
+	}
+
+	@Test
+	public void venta() throws CodigoRepetidoException {
+		//creacion cliente
+		Cliente c = new Cliente(666, "IgnacioTest");
+		assertTrue("No se guardo el cliente", c.guardar());
+		Comic comic = new Comic("La caquita", 30);
+		assertTrue("No se creo el comic", comic.guardar());
+		Venta v = new Venta();
+		v.addDetalle(new Detalle(comic));
+		v.setCliente(c);
+		v.guardar();
+		//Obtiene la venta para visualizar
+		Venta vv = VentaBuilder.getVenta(v.getIdVenta());
+		System.out.println("+++++++++++++++++++++++++++++++++++++++++++++");
+		System.out.println(vv);
+		System.out.println("+++++++++++++++++++++++++++++++++++++++++++++");
+		//borrado
+		c.borrar();
+		c.borrar();
 	}
 }

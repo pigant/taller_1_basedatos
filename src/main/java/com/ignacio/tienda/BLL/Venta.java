@@ -31,8 +31,8 @@ public class Venta implements CrudOperationBLL {
 	}
 
 	public void addDetalle(final Detalle detalle) {
-		actualizar = true;
 		d.add(detalle);
+		detalle.setVenta(this);
 	}
 
 	public Integer getIdVenta() {
@@ -40,6 +40,7 @@ public class Venta implements CrudOperationBLL {
 	}
 
 	public void setIdVenta(final Integer idVenta) {
+		actualizar = true;
 		this.idVenta = idVenta;
 	}
 
@@ -48,23 +49,26 @@ public class Venta implements CrudOperationBLL {
 	}
 
 	public void setCliente(final Cliente c) {
-		actualizar = true;
 		this.c = c;
 	}
 
 	@Override
 	public boolean guardar() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-		/*boolean s = false;
+		boolean s = false;
 		if (actualizar) {
 			// [ ] Actualiza la venta
-			// [ ] Actualiza los detalles
+			s = new VentaDAL().actualizar(c.getRut(), idVenta);
 		} else {
-			// [ ] crea la venta
-			// [ ] obtiene el id de la venta
-			// [ ] agrega los detalles
+			// [x] crea la venta
+			// [x] obtiene el id de la venta
+			idVenta = new VentaDAL().guardar(c.getRut());
+			if (s = idVenta != null) {
+				for (Detalle detalle : d) {
+					detalle.guardar();
+				}
+			}
 		}
-		return s;*/
+		return s;
 	}
 
 	@Override
@@ -73,7 +77,7 @@ public class Venta implements CrudOperationBLL {
 	}
 
 	public static Venta get(final int id) {
-		return get(id, true);
+		return get(id, false);
 	}
 
 	public static Venta get(final int id, final boolean cache) {
@@ -89,6 +93,18 @@ public class Venta implements CrudOperationBLL {
 			v = VentaDAL.get(id);
 		}
 		return v;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Venta{" + "idVenta=").append(idVenta).append(", c=").append(c).append(", d= [");
+		for (Detalle detalle : d) {
+			sb.append(detalle).append(",");
+		}
+		sb.deleteCharAt(sb.length() - 1);
+		sb.append("] }");
+		return sb.toString();
 	}
 
 }

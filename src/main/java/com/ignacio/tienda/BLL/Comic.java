@@ -35,7 +35,7 @@ public class Comic implements CrudOperationBLL {
 	}
 
 	public static Comic get(int codigo) {
-		return get(codigo, true);
+		return get(codigo, false);
 	}
 
 	public static Comic get(int codigo, boolean cache) {

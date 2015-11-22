@@ -25,10 +25,24 @@ public class Detalle implements CrudOperationBLL {
 	public Detalle() {
 	}
 
+	public Detalle(Comic comic, Venta venta) {
+		this.comic = comic;
+		this.venta = venta;
+	}
+
+	public Detalle(Venta v){
+		this.venta = venta;
+	}
+
 	public Detalle(final int idDetalle, final Comic comic, final Venta venta) {
 		this.idDetalle = idDetalle;
 		this.comic = comic;
 		this.venta = venta;
+		this.actualizar = true;
+	}
+
+	public Detalle(Comic comic) {
+		this.comic = comic;
 	}
 
 	public int getIdDetalle() {
@@ -55,7 +69,7 @@ public class Detalle implements CrudOperationBLL {
 		this.venta = venta;
 	}
 
-	public static Detalle get(int id){
+	public static Detalle get(int id) {
 		return DetalleDAL.get(id);
 	}
 

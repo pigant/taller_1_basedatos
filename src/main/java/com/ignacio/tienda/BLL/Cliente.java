@@ -17,10 +17,10 @@ import java.util.Objects;
 public class Cliente {
 
 	private static HashMap<Integer, Cliente> clientes = new HashMap();
-	private int rut;
+	private Integer rut;
 	private int rutPrevio;
 	private String nombre;
-	private boolean cambio = false;
+	private boolean actualizar = false;
 
 	public Cliente() {
 	}
@@ -32,7 +32,7 @@ public class Cliente {
 	}
 
 	public static Cliente get(int rut) {
-		return get(rut, true);
+		return get(rut, false);
 	}
 
 	public static Cliente get(int rut, boolean cache) {
@@ -53,7 +53,7 @@ public class Cliente {
 
 	public boolean guardar() throws CodigoRepetidoException {
 		boolean s = false;
-		if (cambio) {
+		if (actualizar) {
 			s = new ClienteDAL().actualizar(rut, nombre, rutPrevio);
 		} else {
 			s = new ClienteDAL().guardar(rut, nombre);
@@ -72,7 +72,7 @@ public class Cliente {
 	}
 
 	public void setRut(int rut) {
-		this.cambio = true;
+		this.actualizar = this.rut != null && this.nombre != null;
 		this.rutPrevio = this.rut;
 		this.rut = rut;
 	}
@@ -82,7 +82,7 @@ public class Cliente {
 	}
 
 	public void setNombre(String nombre) {
-		this.cambio = true;
+		this.actualizar = this.rut != null && this.nombre != null;
 		this.nombre = nombre;
 	}
 
