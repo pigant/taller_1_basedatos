@@ -6,6 +6,7 @@
 package com.ignacio.tienda.BLL;
 
 import com.ignacio.tienda.DAL.ComicDAL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -51,6 +52,10 @@ public class Comic implements CrudOperationBLL {
 			c = ComicDAL.get(codigo);
 		}
 		return c;
+	}
+
+	public static ArrayList<Comic> getAll() {
+		return ComicDAL.getAll();
 	}
 
 	@Override

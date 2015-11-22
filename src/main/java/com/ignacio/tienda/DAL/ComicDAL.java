@@ -8,6 +8,7 @@ package com.ignacio.tienda.DAL;
 import com.ignacio.tienda.BLL.Comic;
 import com.ignacio.tienda.DAL.exception.CodigoRepetidoException;
 import com.ignacio.tienda.DAL.exception.SinBaseDatosException;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -44,6 +45,31 @@ public class ComicDAL {
 			}
 		}
 		return c;
+	}
+
+	public static ArrayList<Comic> getAll() {
+		ArrayList<Comic> ac = new ArrayList<>();
+		BD bd = null;
+		try {
+			bd = new BD();
+			ResultSet r = bd.createStatement().executeQuery(
+					"select codigo, nombre, numero from codigo");
+			while (r.next()) {
+				ac.add(new Comic(r.getInt("codigo"),
+						r.getString("nombre"),
+						r.getInt("codigo")));
+			}
+			r.close();
+		} catch (SinBaseDatosException ex) {
+			Logger.getLogger(ComicDAL.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (SQLException ex) {
+			Logger.getLogger(ComicDAL.class.getName()).log(Level.SEVERE, null, ex);
+		} finally {
+			if (bd != null) {
+				bd.close();
+			}
+		}
+		return ac;
 	}
 
 	public Integer guardar(String nombre, int numero) {
