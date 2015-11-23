@@ -7,6 +7,7 @@ package com.ignacio.tienda.BLL;
 
 import com.ignacio.tienda.DAL.ClienteDAL;
 import com.ignacio.tienda.DAL.exception.CodigoRepetidoException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -17,6 +18,10 @@ import java.util.Objects;
 public class Cliente {
 
 	private static HashMap<Integer, Cliente> clientes = new HashMap();
+
+    public static ArrayList<Cliente> getAll() {
+        return ClienteDAL.getAll();
+    }
 	private Integer rut;
 	private int rutPrevio;
 	private String nombre;
