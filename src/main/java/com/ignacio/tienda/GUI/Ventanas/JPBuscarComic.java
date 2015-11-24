@@ -7,6 +7,7 @@ package com.ignacio.tienda.GUI.Ventanas;
 
 import com.ignacio.tienda.BLL.Comic;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -98,16 +99,32 @@ public class JPBuscarComic extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 		String buscar = jTF_nombre.getText();
-		ArrayList<Comic> a = Comic.find(buscar);
-		DefaultTableModel dtm
-			= (DefaultTableModel) jT_comics.getModel();
-		int cantidad = dtm.getRowCount();
-		for (int i = 0; i < cantidad; i++) {
-			dtm.removeRow(0);
-		}
-		for (Comic c : a) {
-			dtm.addRow(new Object[]{c.getCodigo(),
-				c.getNombre(), c.getNumero()});
+		if (buscar.matches(".+")) {
+			ArrayList<Comic> a = Comic.find(buscar);
+			DefaultTableModel dtm
+				= (DefaultTableModel) jT_comics.getModel();
+			int cantidad = dtm.getRowCount();
+			for (int i = 0; i < cantidad; i++) {
+				dtm.removeRow(0);
+			}
+			for (Comic c : a) {
+				dtm.addRow(new Object[]{c.getCodigo(),
+					c.getNombre(), c.getNumero()});
+			}
+			if (a.size() > 0) {
+				JOptionPane.showMessageDialog(this,
+					"Se encontro el comic", "Exito",
+					JOptionPane.INFORMATION_MESSAGE);
+			} else {
+				JOptionPane.showMessageDialog(this,
+					"No se encontro el comic", "Advertencia",
+					JOptionPane.WARNING_MESSAGE);
+			}
+		} else {
+			JOptionPane.showMessageDialog(this,
+				"Inserte un nombre, para buscar", "Advertencia",
+				JOptionPane.WARNING_MESSAGE);
+			jTF_nombre.requestFocus();
 		}
 
     }//GEN-LAST:event_jButton1ActionPerformed
