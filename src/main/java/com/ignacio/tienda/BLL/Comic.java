@@ -165,4 +165,8 @@ public class Comic {
 		return new ComicDAL().find(buscar);
 	}
 
+	public static int findTotalRevistas(){
+		return new ComicDAL().findTotalRevistas();
+	}
+
 }

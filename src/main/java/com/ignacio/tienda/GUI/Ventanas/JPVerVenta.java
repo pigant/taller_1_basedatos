@@ -9,6 +9,7 @@ import com.ignacio.tienda.BLL.Detalle;
 import com.ignacio.tienda.BLL.Venta;
 import com.ignacio.tienda.BLL.VentaBuilder;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -133,6 +134,11 @@ public class JPVerVenta extends javax.swing.JPanel {
 		if (raw_codigo.matches("\\d+")) {
 			codigo = Integer.valueOf(raw_codigo);
 		} else {
+			JOptionPane.showMessageDialog(this,
+				"El codigo debe ser numerico",
+				"Mal formato en el codigo",
+				JOptionPane.WARNING_MESSAGE);
+			jTF_codigo.requestFocus();
 			return;
 		}
 		Venta venta = VentaBuilder.getVenta(codigo);

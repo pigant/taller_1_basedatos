@@ -23,6 +23,11 @@ public class Cliente {
     public static ArrayList<Cliente> getAll() {
         return ClienteDAL.getAll();
     }
+
+	public static String findMejorCliente() {
+		return ClienteDAL.findMejorCliente();
+	}
+
 	private Integer rut;
 	private int rutPrevio;
 	private String nombre;

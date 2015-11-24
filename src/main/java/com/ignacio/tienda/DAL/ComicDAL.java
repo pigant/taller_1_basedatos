@@ -165,13 +165,30 @@ public class ComicDAL {
 				"codigo", "Nombre", "numero");
 			a = new ArrayList<>();
 			for (Object[] o : a2) {
-				a.add(new Comic((
-					Integer)o[0], (String)o[1], (Integer) o[2]));
+				a.add(new Comic((Integer) o[0], (String) o[1], (Integer) o[2]));
 			}
 		} catch (SinBaseDatosException ex) {
 			Logger.getLogger(ComicDAL.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		return a;
+	}
+
+	public int findTotalRevistas() {
+		int i = 0;
+		BD bd;
+		try {
+			bd = new BD();
+			ResultSet r = 
+				bd.createStatement().executeQuery(
+					"select count(*) from detalle");
+			r.next();
+			i = r.getInt(1);
+		} catch (SinBaseDatosException ex) {
+			Logger.getLogger(ComicDAL.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (SQLException ex) {
+			Logger.getLogger(ComicDAL.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return i;
 	}
 
 }
