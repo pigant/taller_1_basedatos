@@ -103,4 +103,13 @@ public class Venta {
 		return sb.toString();
 	}
 
+	public ArrayList<Detalle> getDetalles() {
+		return d;
+	}
+
+	void addDetalle(int id, Detalle detalle) {
+		detalle.setIdDetalle(id);
+		addDetalle(detalle);
+	}
+
 }

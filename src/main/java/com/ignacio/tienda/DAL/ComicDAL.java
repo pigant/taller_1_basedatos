@@ -156,4 +156,22 @@ public class ComicDAL {
 		return salida;
 	}
 
+	public ArrayList<Comic> find(String buscar) {
+		ArrayList<Comic> a = null;
+		BD bd;
+		try {
+			bd = new BD();
+			ArrayList<Object[]> a2 = bd.select("comic", "nombre like '%" + buscar + "%'",
+				"codigo", "Nombre", "numero");
+			a = new ArrayList<>();
+			for (Object[] o : a2) {
+				a.add(new Comic((
+					Integer)o[0], (String)o[1], (Integer) o[2]));
+			}
+		} catch (SinBaseDatosException ex) {
+			Logger.getLogger(ComicDAL.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return a;
+	}
+
 }

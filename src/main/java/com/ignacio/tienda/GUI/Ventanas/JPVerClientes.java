@@ -38,6 +38,8 @@ public class JPVerClientes extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         jT_clientes = new javax.swing.JTable();
 
+        setMinimumSize(new java.awt.Dimension(400, 400));
+        setPreferredSize(new java.awt.Dimension(400, 400));
         setLayout(new java.awt.GridBagLayout());
 
         jB_verCliente.setText("Ver clientes");

@@ -45,7 +45,7 @@ public class Detalle implements CrudOperationBLL {
 		this.comic = comic;
 	}
 
-	public int getIdDetalle() {
+	public Integer getIdDetalle() {
 		return idDetalle;
 	}
 
@@ -53,7 +53,7 @@ public class Detalle implements CrudOperationBLL {
 		this.idDetalle = idDetalle;
 	}
 
-	public Comic getCodigoComic() {
+	public Comic getComic() {
 		return comic;
 	}
 

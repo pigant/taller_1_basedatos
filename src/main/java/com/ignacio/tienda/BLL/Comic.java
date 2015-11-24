@@ -161,4 +161,8 @@ public class Comic {
 		return true;
 	}
 
+	public static ArrayList<Comic> find(String buscar) {
+		return new ComicDAL().find(buscar);
+	}
+
 }

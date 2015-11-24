@@ -5,8 +5,10 @@
  */
 package com.ignacio.tienda.GUI;
 
+import com.ignacio.tienda.GUI.Ventanas.JPBuscarComic;
 import com.ignacio.tienda.GUI.Ventanas.JPIngresoVenta;
 import com.ignacio.tienda.GUI.Ventanas.JPVerClientes;
+import com.ignacio.tienda.GUI.Ventanas.JPVerVenta;
 import com.ignacio.tienda.GUI.Ventanas.JpIngresoCliente;
 import com.ignacio.tienda.GUI.Ventanas.jPIngresoComic;
 import com.ignacio.tienda.GUI.Ventanas.jPVerRevistas;
@@ -42,6 +44,9 @@ public class JFrmPrincipal extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         jMI_clientes = new javax.swing.JMenuItem();
         jMI_comics = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenu4 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -98,7 +103,27 @@ public class JFrmPrincipal extends javax.swing.JFrame {
         });
         jMenu3.add(jMI_comics);
 
+        jMenuItem4.setText("Venta");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem4);
+
         jMenuBar1.add(jMenu3);
+
+        jMenu4.setText("Buscar");
+
+        jMenuItem1.setText("Buscar comic");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu4);
 
         jMenu2.setText("Ayuda");
         jMenuBar1.add(jMenu2);
@@ -148,6 +173,22 @@ public class JFrmPrincipal extends javax.swing.JFrame {
         pack();
     }//GEN-LAST:event_jMI_comicsActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        jP_principal.removeAll();
+        JPBuscarComic i = new JPBuscarComic();
+        i.setSize(jP_principal.getSize());
+        jP_principal.add(i);
+        pack();
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        jP_principal.removeAll();
+        JPVerVenta i = new JPVerVenta();
+        i.setSize(jP_principal.getSize());
+        jP_principal.add(i);
+        pack();
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -192,9 +233,12 @@ public class JFrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JPanel jP_principal;
     // End of variables declaration//GEN-END:variables
 }

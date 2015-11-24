@@ -92,7 +92,9 @@ public class VentaBuilder {
 				int c_codigoComic = r.getInt("codigo");
 				String c_nombre = r.getString("nombre");
 				int c_numero = r.getInt("numero");
-				v.addDetalle(new Detalle(new Comic(c_codigoComic, c_nombre, c_numero), v));
+				v.addDetalle(id, 
+					new Detalle(
+						new Comic(c_codigoComic, c_nombre, c_numero)));
 			}
 			r.close();
 			v.setCliente(c);
