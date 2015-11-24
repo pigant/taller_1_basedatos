@@ -9,6 +9,7 @@ import com.ignacio.tienda.BLL.Comic;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -35,10 +36,11 @@ public class jPVerRevistas extends javax.swing.JPanel {
 
         jB_verRevistas = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        jL_dinero = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jT_comics = new javax.swing.JTable();
 
+        setPreferredSize(new java.awt.Dimension(400, 400));
         setLayout(new java.awt.GridBagLayout());
 
         jB_verRevistas.setText("Ver revistas");
@@ -55,6 +57,11 @@ public class jPVerRevistas extends javax.swing.JPanel {
         add(jB_verRevistas, gridBagConstraints);
 
         jButton2.setText("Contar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
@@ -68,7 +75,9 @@ public class jPVerRevistas extends javax.swing.JPanel {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 0.3;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 15);
-        add(jLabel1, gridBagConstraints);
+        add(jL_dinero, gridBagConstraints);
+
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(400, 400));
 
         jT_comics.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -120,11 +129,17 @@ public class jPVerRevistas extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jB_verRevistasActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+		TableModel dtm = jT_comics.getModel();
+		int dinero = dtm.getRowCount() * 1000;
+		jL_dinero.setText(String.valueOf(dinero));
+    }//GEN-LAST:event_jButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jB_verRevistas;
     private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jL_dinero;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jT_comics;
     // End of variables declaration//GEN-END:variables
