@@ -6,6 +6,7 @@
 package com.ignacio.tienda.BLL;
 
 import com.ignacio.tienda.DAL.VentaDAL;
+import com.ignacio.tienda.DAL.exception.CodigoRepetidoException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -13,16 +14,15 @@ import java.util.HashMap;
  *
  * @author ignacio
  */
-public class Venta implements CrudOperationBLL {
+public class Venta {
 
 	private static HashMap<Integer, Venta> ventas = new HashMap();
 	private Integer idVenta;
 	private Cliente c;
-	private ArrayList<Detalle> d;
+	private ArrayList<Detalle> d = new ArrayList();
 	private boolean actualizar;
 
 	public Venta() {
-		d = new ArrayList<>();
 	}
 
 	public Venta(final int idVenta, final Cliente c) {
@@ -52,8 +52,7 @@ public class Venta implements CrudOperationBLL {
 		this.c = c;
 	}
 
-	@Override
-	public boolean guardar() {
+	public boolean guardar() throws CodigoRepetidoException {
 		boolean s = false;
 		if (actualizar) {
 			// [ ] Actualiza la venta
@@ -61,17 +60,14 @@ public class Venta implements CrudOperationBLL {
 		} else {
 			// [x] crea la venta
 			// [x] obtiene el id de la venta
-			idVenta = new VentaDAL().guardar(c.getRut());
-			if (s = idVenta != null) {
-				for (Detalle detalle : d) {
-					detalle.guardar();
-				}
+			s = new VentaDAL().guardar(idVenta, c.getRut());
+			for (Detalle detalle : d) {
+				s &= detalle.guardar();
 			}
 		}
 		return s;
 	}
 
-	@Override
 	public boolean borrar() {
 		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}

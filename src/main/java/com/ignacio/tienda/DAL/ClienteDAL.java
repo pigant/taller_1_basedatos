@@ -20,7 +20,7 @@ import java.util.logging.Logger;
  */
 public class ClienteDAL {
 
-    public static Cliente get(int rut) {
+    public static Cliente get(int rut) throws ClienteNoExisteException {
         Cliente c = null;
         BD bd = null;
         try {
@@ -40,6 +40,9 @@ public class ClienteDAL {
                 bd.close();
             }
         }
+		if (c == null){
+			throw new ClienteNoExisteException();
+		}
         return c;
     }
 

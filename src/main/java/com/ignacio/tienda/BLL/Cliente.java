@@ -6,6 +6,7 @@
 package com.ignacio.tienda.BLL;
 
 import com.ignacio.tienda.DAL.ClienteDAL;
+import com.ignacio.tienda.DAL.ClienteNoExisteException;
 import com.ignacio.tienda.DAL.exception.CodigoRepetidoException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,11 +37,11 @@ public class Cliente {
 		this.nombre = nombre;
 	}
 
-	public static Cliente get(int rut) {
+	public static Cliente get(int rut) throws ClienteNoExisteException {
 		return get(rut, false);
 	}
 
-	public static Cliente get(int rut, boolean cache) {
+	public static Cliente get(int rut, boolean cache) throws ClienteNoExisteException {
 		Cliente c;
 		if (cache) {
 			if (clientes.containsKey(rut)) {

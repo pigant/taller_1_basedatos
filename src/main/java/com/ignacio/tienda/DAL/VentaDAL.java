@@ -22,23 +22,17 @@ public class VentaDAL {
 		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
 
-	public Integer guardar(int rut) {
-		Integer i = null;
+	public boolean guardar(int idVenta, int rut) throws CodigoRepetidoException {
+		boolean i = false;
 		BD bd;
 		try {
 			bd = new BD();
-			boolean x = bd.update("insert into venta (rut) values (?)", rut);
-			if (x) {
-				i = bd.lastId();
-			}
+			i = bd.update(
+				"insert into venta (idVenta, rut) values (?,?)",
+				idVenta, rut);
 		} catch (SinBaseDatosException ex) {
 			Logger.getLogger(VentaDAL.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (CodigoRepetidoException ex) {
-			Logger.getLogger(VentaDAL.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (SQLException ex) {
-			Logger.getLogger(VentaDAL.class.getName()).log(Level.SEVERE, null, ex);
 		}
-
 		return i;
 	}
 
