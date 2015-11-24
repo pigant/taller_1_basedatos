@@ -26,12 +26,12 @@ public class ClienteDAL {
 		try {
 			bd = new BD();
 			ArrayList<Object[]> a = bd.select("cliente",
-				"rut=" + rut, "rut", "nombre");
+					"rut=" + rut, "rut", "nombre");
 			if (a != null && a.size() > 0) {
 				Object[] o = a.get(0);
 				c = new Cliente(
-					(int) o[0],
-					(String) o[1]);
+						(int) o[0],
+						(String) o[1]);
 			}
 		} catch (SinBaseDatosException ex) {
 			Logger.getLogger(ComicDAL.class.getName()).log(Level.SEVERE, null, ex);
@@ -53,11 +53,11 @@ public class ClienteDAL {
 			bd = new BD();
 			a = new ArrayList<>();
 			ResultSet r = bd.createStatement().executeQuery(
-				"select rut, nombre from cliente");
+					"select rut, nombre from cliente");
 			while (r.next()) {
 				a.add(new Cliente(
-					r.getInt("rut"),
-					r.getString("nombre")));
+						r.getInt("rut"),
+						r.getString("nombre")));
 			}
 		} catch (SinBaseDatosException ex) {
 			Logger.getLogger(ClienteDAL.class.getName()).log(Level.SEVERE, null, ex);
@@ -73,11 +73,11 @@ public class ClienteDAL {
 		try {
 			bd = new BD();
 			String consulta = "select c.nombre, count(c.nombre) "
-				+ "from detalle "
-				+ "join venta as v on detalle.id_venta=v.idVenta "
-				+ "join cliente as c on v.rut=c.rut "
-				+ "group by c.nombre "
-				+ "order by count(c.nombre) DESC limit 1";
+					+ "from detalle "
+					+ "join venta as v on detalle.id_venta=v.idVenta "
+					+ "join cliente as c on v.rut=c.rut "
+					+ "group by c.nombre "
+					+ "order by count(c.nombre) DESC limit 1";
 			ResultSet r = bd.createStatement().executeQuery(consulta);
 			r.next();
 			nombre = r.getString(1);
@@ -89,17 +89,48 @@ public class ClienteDAL {
 		return nombre;
 	}
 
+	public static Cliente findPorCompra(int codigo) throws CompraNoExisteException {
+		Cliente c = null;
+		BD bd = null;
+		try {
+			bd = new BD();
+			StringBuilder sb = new StringBuilder();
+			sb.append("select c.rut,c.nombre from cliente as c").
+					append(" join venta as v on c.rut=v.rut ").
+					append("where v.idVenta=").
+					append(codigo);
+			ResultSet r = bd.createStatement().executeQuery(sb.toString());
+			if (r.next()) {
+				c = new Cliente(r.getInt("rut"), r.getString("nombre"));
+			}
+			r.close();
+		} catch (SinBaseDatosException ex) {
+			Logger.getLogger(ClienteDAL.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (SQLException ex) {
+			Logger.getLogger(ClienteDAL.class.getName()).log(Level.SEVERE, null, ex);
+		} finally {
+			if (bd != null) {
+				bd.close();
+			}
+		}
+		if (c == null) {
+			throw new CompraNoExisteException(
+					"No hay un cliente para la compra " + codigo);
+		}
+		return c;
+	}
+
 	public boolean guardar(int rut, String nombre) throws CodigoRepetidoException {
 		boolean salida = false;
 		BD bd = null;
 		try {
 			bd = new BD();
 			salida = bd.update(
-				"insert into cliente (rut, nombre) values (?,?)",
-				rut, nombre);
+					"insert into cliente (rut, nombre) values (?,?)",
+					rut, nombre);
 		} catch (SinBaseDatosException ex) {
 			Logger.getLogger(ComicDAL.class.getName()).
-				log(Level.SEVERE, ex.getMessage(), ex.getCause());
+					log(Level.SEVERE, ex.getMessage(), ex.getCause());
 		} finally {
 			if (bd != null) {
 				bd.close();
@@ -114,8 +145,8 @@ public class ClienteDAL {
 		try {
 			bd = new BD();
 			salida = bd.update(
-				"update cliente set rut=?, nombre=? where rut=?",
-				rut, nombre, rutPrevio);
+					"update cliente set rut=?, nombre=? where rut=?",
+					rut, nombre, rutPrevio);
 		} catch (SinBaseDatosException ex) {
 			Logger.getLogger(ComicDAL.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (CodigoRepetidoException ex) {

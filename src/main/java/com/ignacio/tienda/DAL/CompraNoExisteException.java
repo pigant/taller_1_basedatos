@@ -3,13 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.ignacio.tienda.BLL;
+package com.ignacio.tienda.DAL;
 
 /**
  *
  * @author ignacio
  */
-interface CrudOperationBLL {
-	public boolean guardar();
-	public boolean borrar();
+public class CompraNoExisteException extends Exception {
+
+	public CompraNoExisteException(String string) {
+	}
+	
 }

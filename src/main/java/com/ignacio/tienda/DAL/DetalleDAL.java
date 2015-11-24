@@ -5,6 +5,7 @@ import com.ignacio.tienda.BLL.Detalle;
 import com.ignacio.tienda.BLL.Venta;
 import com.ignacio.tienda.DAL.exception.CodigoRepetidoException;
 import com.ignacio.tienda.DAL.exception.SinBaseDatosException;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -37,6 +38,40 @@ public class DetalleDAL {
 			Logger.getLogger(DetalleDAL.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		return d;
+	}
+
+	public static ArrayList<Detalle> getAll(int codigo) {
+		ArrayList<Detalle> a = null;
+		BD bd = null;
+		try {
+			bd = new BD();
+			StringBuilder sb = new StringBuilder();
+			sb.append("select d.idDetalle, d.codigoComic, c.codigo, c.nombre, c.numero from detalle as d").
+					append(" join comic as c on d.codigoComic=c.codigo ").
+					append("where d.id_venta=").
+					append(codigo);
+			ResultSet r = bd.createStatement().executeQuery(sb.toString());
+			a = new ArrayList<>();
+			while (r.next()) {
+				int id = r.getInt("idDetalle");
+				int codigoComic = r.getInt("codigoComic");
+				int c_codigoComic = r.getInt("codigo");
+				String c_nombre = r.getString("nombre");
+				int c_numero = r.getInt("numero");
+				a.add(new Detalle(
+						new Comic(c_codigoComic, c_nombre, c_numero)));
+			}
+			r.close();
+		} catch (SinBaseDatosException ex) {
+			Logger.getLogger(DetalleDAL.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (SQLException ex) {
+			Logger.getLogger(DetalleDAL.class.getName()).log(Level.SEVERE, null, ex);
+		} finally {
+			if (bd != null) {
+				bd.close();
+			}
+		}
+		return a;
 	}
 
 	public Integer guardar(int idVenta, int codigoComic) {

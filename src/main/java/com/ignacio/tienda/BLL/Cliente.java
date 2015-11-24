@@ -7,6 +7,7 @@ package com.ignacio.tienda.BLL;
 
 import com.ignacio.tienda.DAL.ClienteDAL;
 import com.ignacio.tienda.DAL.ClienteNoExisteException;
+import com.ignacio.tienda.DAL.CompraNoExisteException;
 import com.ignacio.tienda.DAL.exception.CodigoRepetidoException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,6 +27,10 @@ public class Cliente {
 
 	public static String findMejorCliente() {
 		return ClienteDAL.findMejorCliente();
+	}
+
+	static Cliente findPorCompra(int codigo) throws CompraNoExisteException {
+		return ClienteDAL.findPorCompra(codigo);
 	}
 
 	private Integer rut;

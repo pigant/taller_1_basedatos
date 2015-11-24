@@ -6,6 +6,7 @@
 package com.ignacio.tienda.BLL;
 
 import com.ignacio.tienda.DAL.DetalleDAL;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -13,9 +14,13 @@ import java.util.logging.Logger;
  *
  * @author ignacio
  */
-public class Detalle implements CrudOperationBLL {
+public class Detalle {
 
 	private static final Logger LOG = Logger.getLogger("main");
+
+	static ArrayList<Detalle> getAll(int codigo) {
+		return DetalleDAL.getAll(codigo);
+	}
 
 	private Integer idDetalle;
 	private Comic comic;
@@ -73,7 +78,6 @@ public class Detalle implements CrudOperationBLL {
 		return DetalleDAL.get(id);
 	}
 
-	@Override
 	public boolean guardar() {
 		boolean s = false;
 		if (actualizar) {
@@ -104,7 +108,6 @@ public class Detalle implements CrudOperationBLL {
 		return s;
 	}
 
-	@Override
 	public boolean borrar() {
 		boolean s = false;
 		LOG.log(Level.FINE, "Eliminando el detalle {0}", this);

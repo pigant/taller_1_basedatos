@@ -7,6 +7,7 @@ package com.ignacio.tienda.BLL;
 
 import com.ignacio.tienda.DAL.BD;
 import com.ignacio.tienda.DAL.ClienteNoExisteException;
+import com.ignacio.tienda.DAL.CompraNoExisteException;
 import com.ignacio.tienda.DAL.exception.CodigoRepetidoException;
 import com.ignacio.tienda.DAL.exception.SinBaseDatosException;
 import java.sql.ResultSet;
@@ -22,8 +23,8 @@ import java.util.logging.Logger;
 public class VentaBuilder {
 
 	public static boolean crear(final int idVenta,
-		final int rut,
-		final ArrayList<Comic> comics) throws ClienteNoExisteException, CodigoRepetidoException {
+			final int rut,
+			final ArrayList<Comic> comics) throws ClienteNoExisteException, CodigoRepetidoException {
 		//
 		boolean salida = false;
 		Venta v = new Venta(idVenta, Cliente.get(rut));
@@ -59,7 +60,7 @@ public class VentaBuilder {
 		return false;
 	}
 
-	public static Venta getVenta(int codigo) {
+	public static Venta getVenta(int codigo) throws CompraNoExisteException {
 		BD bd;
 		ResultSet r;
 		Cliente c;
@@ -67,41 +68,16 @@ public class VentaBuilder {
 		try {
 			bd = new BD();
 			//Cliente
-			StringBuilder sb = new StringBuilder();
-			sb.append("select c.rut,c.nombre from cliente as c").
-				append(" join venta as v on c.rut=v.rut ").
-				append("where v.idVenta=").
-				append(codigo);
-			r = bd.createStatement().executeQuery(sb.toString());
-			r.next();
-			c = new Cliente(r.getInt("rut"), r.getString("nombre"));
-			r.close();
+			c = Cliente.findPorCompra(codigo);
 			//detalles
-			sb = new StringBuilder();
-			sb.append("select d.idDetalle, d.codigoComic, c.codigo, c.nombre, c.numero from detalle as d").
-				append(" join comic as c on d.codigoComic=c.codigo ").
-				append("where d.id_venta=").
-				append(codigo);
-			r = bd.createStatement().executeQuery(sb.toString());
-			//Se crea la venta despues de haber realizado las consultas,
-			//por mejoror el rendimiento
 			v = new Venta();
-			while (r.next()) {
-				int id = r.getInt("idDetalle");
-				int codigoComic = r.getInt("codigoComic");
-				int c_codigoComic = r.getInt("codigo");
-				String c_nombre = r.getString("nombre");
-				int c_numero = r.getInt("numero");
-				v.addDetalle(id, 
-					new Detalle(
-						new Comic(c_codigoComic, c_nombre, c_numero)));
+			ArrayList<Detalle> d = Detalle.getAll(codigo);
+			for (Detalle detalle : d) {
+				v.addDetalle(detalle);
 			}
-			r.close();
 			v.setCliente(c);
 
 		} catch (SinBaseDatosException ex) {
-			Logger.getLogger(VentaBuilder.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (SQLException ex) {
 			Logger.getLogger(VentaBuilder.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		return v;
