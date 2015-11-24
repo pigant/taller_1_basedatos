@@ -49,7 +49,7 @@ public class ComicTest {
 	// @Test
 	// public void hello() {}
 	@Test
-	public void CRUD() {
+	public void CRUD() throws CodigoRepetidoException {
 		//Creacion
 		Comic c = new Comic("BatmanTest", 999);
 		assertTrue("No se guardo el comic", c.guardar());

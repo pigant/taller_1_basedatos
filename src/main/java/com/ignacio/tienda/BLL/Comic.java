@@ -6,6 +6,7 @@
 package com.ignacio.tienda.BLL;
 
 import com.ignacio.tienda.DAL.ComicDAL;
+import com.ignacio.tienda.DAL.exception.CodigoRepetidoException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
@@ -14,12 +15,13 @@ import java.util.Objects;
  *
  * @author ignacio
  */
-public class Comic implements CrudOperationBLL {
+public class Comic {
 
 	private static HashMap<Integer, Comic> comics;
 	private Integer codigo;
 	private String nombre;
 	private int numero;
+	private boolean actualizar = false;
 
 	public Comic() {
 	}
@@ -29,10 +31,19 @@ public class Comic implements CrudOperationBLL {
 		this.numero = numero;
 	}
 
+	public Comic(Integer codigo, String nombre, int numero,
+		boolean actualizar) {
+		this.codigo = codigo;
+		this.nombre = nombre;
+		this.numero = numero;
+		this.actualizar = actualizar;
+	}
+
 	public Comic(Integer codigo, String nombre, int numero) {
 		this.codigo = codigo;
 		this.nombre = nombre;
 		this.numero = numero;
+		actualizar = false;
 	}
 
 	public static Comic get(int codigo) {
@@ -58,24 +69,28 @@ public class Comic implements CrudOperationBLL {
 		return ComicDAL.getAll();
 	}
 
-	@Override
-	public boolean guardar() {
+	public boolean guardar() throws CodigoRepetidoException{
 		boolean s = false;
-		if (codigo == null) {
-			Integer c = new ComicDAL().guardar(nombre, numero);
+		if (!actualizar) {
+			Integer c;
+			if (codigo != null) {
+				c = new ComicDAL().guardar(codigo, nombre, numero);
+			} else {
+				c = new ComicDAL().guardar(nombre, numero);
+			}
 			if (c != null) {
 				s = c > -1;
 				if (s) {
 					this.codigo = c;
 				}
 			}
+			actualizar = true;
 		} else {
 			s = new ComicDAL().actualizar(nombre, numero, codigo);
 		}
 		return s;
 	}
 
-	@Override
 	public boolean borrar() {
 		boolean salida = false;
 		if (codigo != null) {
