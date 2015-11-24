@@ -165,60 +165,46 @@ public class JFrmPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMI_insertarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMI_insertarClienteActionPerformed
-		jP_principal.removeAll();
 		JpIngresoCliente i = new JpIngresoCliente();
-		i.setSize(jP_principal.getSize());
-		jP_principal.add(i);
-		pack();
+		cambiarVentana(i);
     }//GEN-LAST:event_jMI_insertarClienteActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-		jP_principal.removeAll();
 		jPIngresoComic i = new jPIngresoComic();
-		i.setSize(jP_principal.getSize());
-		jP_principal.add(i);
-		pack();
+		cambiarVentana(i);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-		jP_principal.removeAll();
 		JPIngresoVenta i = new JPIngresoVenta();
-		i.setSize(jP_principal.getSize());
-		jP_principal.add(i);
-		pack();
+		cambiarVentana(i);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMI_clientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMI_clientesActionPerformed
-		jP_principal.removeAll();
 		JPVerClientes i = new JPVerClientes();
-		i.setSize(jP_principal.getSize());
-		jP_principal.add(i);
-		pack();
+		cambiarVentana(i);
     }//GEN-LAST:event_jMI_clientesActionPerformed
 
     private void jMI_comicsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMI_comicsActionPerformed
-		jP_principal.removeAll();
 		jPVerRevistas i = new jPVerRevistas();
-		i.setSize(jP_principal.getSize());
-		jP_principal.add(i);
-		pack();
+		cambiarVentana(i);
     }//GEN-LAST:event_jMI_comicsActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-		jP_principal.removeAll();
 		JPBuscarComic i = new JPBuscarComic();
-		i.setSize(jP_principal.getSize());
-		jP_principal.add(i);
-		pack();
+		cambiarVentana(i);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+		JPVerVenta v = new JPVerVenta();
+		cambiarVentana(v);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+	private void cambiarVentana(javax.swing.JPanel i) {
 		jP_principal.removeAll();
-		JPVerVenta i = new JPVerVenta();
 		i.setSize(jP_principal.getSize());
 		jP_principal.add(i);
 		pack();
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
+	}
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
 		String s = "Se han vendido un total de ";
