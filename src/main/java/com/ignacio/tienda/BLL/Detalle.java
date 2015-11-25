@@ -50,6 +50,11 @@ public class Detalle {
 		this.comic = comic;
 	}
 
+	public Detalle(int id, Comic comic) {
+		this.idDetalle = id;
+		this.comic = comic;
+	}
+
 	public Integer getIdDetalle() {
 		return idDetalle;
 	}
