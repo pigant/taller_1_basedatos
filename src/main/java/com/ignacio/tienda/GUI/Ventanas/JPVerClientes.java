@@ -6,12 +6,9 @@
 package com.ignacio.tienda.GUI.Ventanas;
 
 import com.ignacio.tienda.BLL.Cliente;
-import com.ignacio.tienda.BLL.Comic;
 import com.ignacio.tienda.DAL.exception.SinBaseDatosException;
 import com.ignacio.tienda.GUI.ManejoErrorConexion;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 

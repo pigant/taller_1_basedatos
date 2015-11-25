@@ -7,8 +7,6 @@ package com.ignacio.tienda.GUI;
 
 import com.ignacio.tienda.DAL.BD;
 import com.ignacio.tienda.DAL.exception.SinBaseDatosException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 

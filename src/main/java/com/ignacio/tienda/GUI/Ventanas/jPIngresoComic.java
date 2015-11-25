@@ -9,8 +9,6 @@ import com.ignacio.tienda.BLL.Comic;
 import com.ignacio.tienda.DAL.exception.CodigoRepetidoException;
 import com.ignacio.tienda.DAL.exception.SinBaseDatosException;
 import com.ignacio.tienda.GUI.ManejoErrorConexion;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**

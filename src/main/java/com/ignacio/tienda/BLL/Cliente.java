@@ -6,8 +6,8 @@
 package com.ignacio.tienda.BLL;
 
 import com.ignacio.tienda.DAL.ClienteDAL;
-import com.ignacio.tienda.DAL.ClienteNoExisteException;
-import com.ignacio.tienda.DAL.CompraNoExisteException;
+import com.ignacio.tienda.DAL.exception.ClienteNoExisteException;
+import com.ignacio.tienda.DAL.exception.CompraNoExisteException;
 import com.ignacio.tienda.DAL.exception.CodigoRepetidoException;
 import com.ignacio.tienda.DAL.exception.SinBaseDatosException;
 import java.util.ArrayList;

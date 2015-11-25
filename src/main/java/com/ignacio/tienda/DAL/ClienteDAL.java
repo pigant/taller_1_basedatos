@@ -5,6 +5,8 @@
  */
 package com.ignacio.tienda.DAL;
 
+import com.ignacio.tienda.DAL.exception.CompraNoExisteException;
+import com.ignacio.tienda.DAL.exception.ClienteNoExisteException;
 import com.ignacio.tienda.BLL.Cliente;
 import com.ignacio.tienda.DAL.exception.CodigoRepetidoException;
 import com.ignacio.tienda.DAL.exception.SinBaseDatosException;
