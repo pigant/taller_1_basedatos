@@ -203,6 +203,7 @@ public class JFrmPrincipal extends javax.swing.JFrame {
 		jP_principal.removeAll();
 		i.setSize(jP_principal.getSize());
 		jP_principal.add(i);
+		jP_principal.repaint();
 		pack();
 	}
 
