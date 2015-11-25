@@ -281,7 +281,9 @@ class ComicsUtil extends AbstractListModel<String> {
 
 	@Override
 	public String getElementAt(int index) {
-		return c.get(index).getNombre();
+		String nombre = c.get(index).getNombre();
+		nombre += ' ' + c.get(index).getNumero();
+		return nombre;
 	}
 
 }
