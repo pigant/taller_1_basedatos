@@ -7,6 +7,8 @@ package com.ignacio.tienda.GUI.Ventanas;
 
 import com.ignacio.tienda.BLL.Cliente;
 import com.ignacio.tienda.BLL.Comic;
+import com.ignacio.tienda.DAL.exception.SinBaseDatosException;
+import com.ignacio.tienda.GUI.ManejoErrorConexion;
 
 /**
  *
@@ -18,14 +20,18 @@ public class JPInforme extends javax.swing.JPanel {
 	 * Creates new form JPInforme
 	 */
 	public JPInforme() {
-		initComponents();
-		int cantidad = Comic.findTotalRevistas();
-		String strCantidad = String.valueOf(cantidad);
-		String strDinero = "$" + (cantidad * 1000);
-		String nombre = Cliente.findMejorCliente();
-		jL_cantidad.setText(strCantidad);
-		jL_dinero.setText(strDinero);
-		JL_mejorCliente.setText(nombre);
+		try {
+			initComponents();
+			int cantidad = Comic.findTotalRevistas();
+			String strCantidad = String.valueOf(cantidad);
+			String strDinero = "$" + (cantidad * 1000);
+			String nombre = Cliente.findMejorCliente();
+			jL_cantidad.setText(strCantidad);
+			jL_dinero.setText(strDinero);
+			JL_mejorCliente.setText(nombre);
+		} catch (SinBaseDatosException ex) {
+				ManejoErrorConexion.mostrar(this, ex);
+		}
 	}
 
 	/**

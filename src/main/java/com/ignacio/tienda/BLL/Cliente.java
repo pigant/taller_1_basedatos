@@ -9,6 +9,7 @@ import com.ignacio.tienda.DAL.ClienteDAL;
 import com.ignacio.tienda.DAL.ClienteNoExisteException;
 import com.ignacio.tienda.DAL.CompraNoExisteException;
 import com.ignacio.tienda.DAL.exception.CodigoRepetidoException;
+import com.ignacio.tienda.DAL.exception.SinBaseDatosException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
@@ -21,15 +22,15 @@ public class Cliente {
 
 	private static HashMap<Integer, Cliente> clientes = new HashMap();
 
-    public static ArrayList<Cliente> getAll() {
+    public static ArrayList<Cliente> getAll() throws SinBaseDatosException {
         return ClienteDAL.getAll();
     }
 
-	public static String findMejorCliente() {
+	public static String findMejorCliente() throws SinBaseDatosException {
 		return ClienteDAL.findMejorCliente();
 	}
 
-	static Cliente findPorCompra(int codigo) throws CompraNoExisteException {
+	static Cliente findPorCompra(int codigo) throws CompraNoExisteException, SinBaseDatosException {
 		return ClienteDAL.findPorCompra(codigo);
 	}
 
@@ -47,11 +48,11 @@ public class Cliente {
 		this.nombre = nombre;
 	}
 
-	public static Cliente get(int rut) throws ClienteNoExisteException {
+	public static Cliente get(int rut) throws ClienteNoExisteException, SinBaseDatosException {
 		return get(rut, false);
 	}
 
-	public static Cliente get(int rut, boolean cache) throws ClienteNoExisteException {
+	public static Cliente get(int rut, boolean cache) throws ClienteNoExisteException, SinBaseDatosException {
 		Cliente c;
 		if (cache) {
 			if (clientes.containsKey(rut)) {
@@ -67,7 +68,7 @@ public class Cliente {
 		return c;
 	}
 
-	public boolean guardar() throws CodigoRepetidoException {
+	public boolean guardar() throws CodigoRepetidoException, SinBaseDatosException {
 		boolean s = false;
 		if (actualizar) {
 			s = new ClienteDAL().actualizar(rut, nombre, rutPrevio);
@@ -77,7 +78,7 @@ public class Cliente {
 		return s;
 	}
 
-	public boolean borrar() {
+	public boolean borrar() throws SinBaseDatosException {
 		boolean salida = false;
 		salida = new ClienteDAL().borrar(rut);
 		return salida;

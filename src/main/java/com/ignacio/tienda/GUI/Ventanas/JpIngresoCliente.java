@@ -7,8 +7,8 @@ package com.ignacio.tienda.GUI.Ventanas;
 
 import com.ignacio.tienda.BLL.Cliente;
 import com.ignacio.tienda.DAL.exception.CodigoRepetidoException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import com.ignacio.tienda.DAL.exception.SinBaseDatosException;
+import com.ignacio.tienda.GUI.ManejoErrorConexion;
 import javax.swing.JOptionPane;
 
 /**
@@ -120,6 +120,8 @@ public class JpIngresoCliente extends javax.swing.JPanel {
 					"El rut ingresado ya existe, intente con otro",
 					"Rut ya existente",
 					JOptionPane.WARNING_MESSAGE);
+		} catch (SinBaseDatosException ex) {
+				ManejoErrorConexion.mostrar(this, ex);
 		}
     }//GEN-LAST:event_jB_guardarActionPerformed
 

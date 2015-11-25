@@ -7,6 +7,7 @@ package com.ignacio.tienda.BLL;
 
 import com.ignacio.tienda.DAL.ComicDAL;
 import com.ignacio.tienda.DAL.exception.CodigoRepetidoException;
+import com.ignacio.tienda.DAL.exception.SinBaseDatosException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
@@ -46,11 +47,11 @@ public class Comic {
 		actualizar = false;
 	}
 
-	public static Comic get(int codigo) {
+	public static Comic get(int codigo) throws SinBaseDatosException {
 		return get(codigo, false);
 	}
 
-	public static Comic get(int codigo, boolean cache) {
+	public static Comic get(int codigo, boolean cache) throws SinBaseDatosException {
 		Comic c;
 		if (cache) {
 			if (comics.containsKey(codigo)) {
@@ -65,11 +66,11 @@ public class Comic {
 		return c;
 	}
 
-	public static ArrayList<Comic> getAll() {
+	public static ArrayList<Comic> getAll() throws SinBaseDatosException {
 		return ComicDAL.getAll();
 	}
 
-	public boolean guardar() throws CodigoRepetidoException{
+	public boolean guardar() throws CodigoRepetidoException, SinBaseDatosException{
 		boolean s = false;
 		if (!actualizar) {
 			Integer c;
@@ -91,7 +92,7 @@ public class Comic {
 		return s;
 	}
 
-	public boolean borrar() {
+	public boolean borrar() throws SinBaseDatosException {
 		boolean salida = false;
 		if (codigo != null) {
 			salida = new ComicDAL().borrar(codigo);
@@ -161,11 +162,11 @@ public class Comic {
 		return true;
 	}
 
-	public static ArrayList<Comic> find(String buscar) {
+	public static ArrayList<Comic> find(String buscar) throws SinBaseDatosException {
 		return new ComicDAL().find(buscar);
 	}
 
-	public static int findTotalRevistas(){
+	public static int findTotalRevistas() throws SinBaseDatosException{
 		return new ComicDAL().findTotalRevistas();
 	}
 

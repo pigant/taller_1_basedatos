@@ -11,7 +11,6 @@ import com.ignacio.tienda.DAL.CompraNoExisteException;
 import com.ignacio.tienda.DAL.exception.CodigoRepetidoException;
 import com.ignacio.tienda.DAL.exception.SinBaseDatosException;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,7 +23,7 @@ public class VentaBuilder {
 
 	public static boolean crear(final int idVenta,
 			final int rut,
-			final ArrayList<Comic> comics) throws ClienteNoExisteException, CodigoRepetidoException {
+			final ArrayList<Comic> comics) throws ClienteNoExisteException, CodigoRepetidoException, SinBaseDatosException {
 		//
 		boolean salida = false;
 		Venta v = new Venta(idVenta, Cliente.get(rut));
@@ -47,7 +46,7 @@ public class VentaBuilder {
 		return this;
 	}
 
-	public boolean guardar() throws CodigoRepetidoException {
+	public boolean guardar() throws CodigoRepetidoException, SinBaseDatosException {
 		Venta v = new Venta();
 		v.setCliente(c);
 		boolean x = v.guardar();

@@ -6,7 +6,11 @@
 package com.ignacio.tienda.GUI.Ventanas;
 
 import com.ignacio.tienda.BLL.Comic;
+import com.ignacio.tienda.DAL.exception.SinBaseDatosException;
+import com.ignacio.tienda.GUI.ManejoErrorConexion;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -105,28 +109,32 @@ public class jPVerRevistas extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jB_verRevistasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jB_verRevistasActionPerformed
-        ArrayList<Comic> a = Comic.getAll();
-        if (a != null) {
-            DefaultTableModel dtm = new DefaultTableModel();
-            dtm.addColumn("Código");
-            dtm.addColumn("Nombre");
-            dtm.addColumn("Número");
-            for (Comic c : a) {
-                Object[] o = {
-                    c.getCodigo(),
-                    c.getNombre(),
-                    c.getNumero()
-                };
-                dtm.addRow(o);
-            }
-            jT_comics.setModel(dtm);
-            JOptionPane.showMessageDialog(this, "Se cargaron los comics");
-        } else {
-            JOptionPane.showMessageDialog(this,
-                    "No se cargaron los datos de los comics",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-        }
+		try {
+			ArrayList<Comic> a = Comic.getAll();
+			if (a != null) {
+				DefaultTableModel dtm = new DefaultTableModel();
+				dtm.addColumn("Código");
+				dtm.addColumn("Nombre");
+				dtm.addColumn("Número");
+				for (Comic c : a) {
+					Object[] o = {
+						c.getCodigo(),
+						c.getNombre(),
+						c.getNumero()
+					};
+					dtm.addRow(o);
+				}
+				jT_comics.setModel(dtm);
+				JOptionPane.showMessageDialog(this, "Se cargaron los comics");
+			} else {
+				JOptionPane.showMessageDialog(this,
+						"No se cargaron los datos de los comics",
+						"Error",
+						JOptionPane.ERROR_MESSAGE);
+			}
+		} catch (SinBaseDatosException ex) {
+				ManejoErrorConexion.mostrar(this, ex);
+		}
     }//GEN-LAST:event_jB_verRevistasActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

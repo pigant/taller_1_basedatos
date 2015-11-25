@@ -7,7 +7,11 @@ package com.ignacio.tienda.GUI.Ventanas;
 
 import com.ignacio.tienda.BLL.Cliente;
 import com.ignacio.tienda.BLL.Comic;
+import com.ignacio.tienda.DAL.exception.SinBaseDatosException;
+import com.ignacio.tienda.GUI.ManejoErrorConexion;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -82,26 +86,30 @@ public class JPVerClientes extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jB_verClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jB_verClienteActionPerformed
-        ArrayList<Cliente> a = Cliente.getAll();
-        if (a != null) {
-            DefaultTableModel dtm = new DefaultTableModel();
-            dtm.addColumn("Rut");
-            dtm.addColumn("Nombre");
-            for (Cliente c : a) {
-                Object[] o = {
-                    c.getRut(),
-                    c.getNombre()
-                };
-                dtm.addRow(o);
-            }
-            jT_clientes.setModel(dtm);
-            JOptionPane.showMessageDialog(this, "Se cargaron los clientes");
-        } else {
-            JOptionPane.showMessageDialog(this,
-                    "No se cargaron los datos de los clientes",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-        }
+		try {
+			ArrayList<Cliente> a = Cliente.getAll();
+			if (a != null) {
+				DefaultTableModel dtm = new DefaultTableModel();
+				dtm.addColumn("Rut");
+				dtm.addColumn("Nombre");
+				for (Cliente c : a) {
+					Object[] o = {
+						c.getRut(),
+						c.getNombre()
+					};
+					dtm.addRow(o);
+				}
+				jT_clientes.setModel(dtm);
+				JOptionPane.showMessageDialog(this, "Se cargaron los clientes");
+			} else {
+				JOptionPane.showMessageDialog(this,
+						"No se cargaron los datos de los clientes",
+						"Error",
+						JOptionPane.ERROR_MESSAGE);
+			}
+		} catch (SinBaseDatosException ex) {
+				ManejoErrorConexion.mostrar(this, ex);
+		}
     }//GEN-LAST:event_jB_verClienteActionPerformed
 
 

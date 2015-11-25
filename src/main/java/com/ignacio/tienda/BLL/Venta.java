@@ -7,6 +7,7 @@ package com.ignacio.tienda.BLL;
 
 import com.ignacio.tienda.DAL.VentaDAL;
 import com.ignacio.tienda.DAL.exception.CodigoRepetidoException;
+import com.ignacio.tienda.DAL.exception.SinBaseDatosException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -52,7 +53,7 @@ public class Venta {
 		this.c = c;
 	}
 
-	public boolean guardar() throws CodigoRepetidoException {
+	public boolean guardar() throws CodigoRepetidoException, SinBaseDatosException {
 		boolean s = false;
 		if (actualizar) {
 			// [ ] Actualiza la venta

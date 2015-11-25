@@ -17,30 +17,26 @@ import java.util.logging.Logger;
  */
 public class DetalleDAL {
 
-	public static Detalle get(int id) {
+	public static Detalle get(int id) throws SinBaseDatosException {
 		Detalle d = null;
 		BD bd;
-		try {
-			bd = new BD();
-			ArrayList<Object[]> a = bd.select("detalle", "idDetalle=" + id,
-					"idDetalle",
-					"id_venta",
-					"codigoComic"
+		bd = new BD();
+		ArrayList<Object[]> a = bd.select("detalle", "idDetalle=" + id,
+				"idDetalle",
+				"id_venta",
+				"codigoComic"
+		);
+		for (Object[] o : a) {
+			d = new Detalle(
+					(int) o[0],
+					Comic.get((int) o[2]),
+					Venta.get((int) o[1])
 			);
-			for (Object[] o : a) {
-				d = new Detalle(
-						(int) o[0],
-						Comic.get((int) o[2]),
-						Venta.get((int) o[1])
-				);
-			}
-		} catch (SinBaseDatosException ex) {
-			Logger.getLogger(DetalleDAL.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		return d;
 	}
 
-	public static ArrayList<Detalle> getAll(int codigo) {
+	public static ArrayList<Detalle> getAll(int codigo) throws SinBaseDatosException {
 		ArrayList<Detalle> a = null;
 		BD bd = null;
 		try {
@@ -62,8 +58,6 @@ public class DetalleDAL {
 						new Comic(c_codigoComic, c_nombre, c_numero)));
 			}
 			r.close();
-		} catch (SinBaseDatosException ex) {
-			Logger.getLogger(DetalleDAL.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (SQLException ex) {
 			Logger.getLogger(DetalleDAL.class.getName()).log(Level.SEVERE, null, ex);
 		} finally {
@@ -74,7 +68,7 @@ public class DetalleDAL {
 		return a;
 	}
 
-	public Integer guardar(int idVenta, int codigoComic) {
+	public Integer guardar(int idVenta, int codigoComic) throws SinBaseDatosException {
 		Integer s = null;
 		BD bd = null;
 		try {
@@ -85,8 +79,6 @@ public class DetalleDAL {
 			if (b) {
 				s = bd.lastId();
 			}
-		} catch (SinBaseDatosException ex) {
-			Logger.getLogger(DetalleDAL.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (CodigoRepetidoException ex) {
 			Logger.getLogger(DetalleDAL.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (SQLException ex) {
@@ -98,7 +90,7 @@ public class DetalleDAL {
 	}
 
 	public boolean actualizar(final Integer idVenta,
-			final Integer codigo, final Integer idDetalle) {
+			final Integer codigo, final Integer idDetalle) throws SinBaseDatosException {
 		//
 		boolean s = false;
 		try {
@@ -108,22 +100,18 @@ public class DetalleDAL {
 					+ "set id_venta=?, codigoComic=? "
 					+ "where idDetalle=? ",
 					idVenta, codigo, idDetalle);
-		} catch (SinBaseDatosException ex) {
-			Logger.getLogger(DetalleDAL.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (CodigoRepetidoException ex) {
 			Logger.getLogger(DetalleDAL.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		return s;
 	}
 
-	public boolean borrar(final int idDetalle) {
+	public boolean borrar(final int idDetalle) throws SinBaseDatosException {
 		boolean s = false;
 		BD bd;
 		try {
 			bd = new BD();
 			s = bd.update("delete from detalle where idDetalle=?", idDetalle);
-		} catch (SinBaseDatosException ex) {
-			Logger.getLogger(DetalleDAL.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (CodigoRepetidoException ex) {
 			Logger.getLogger(DetalleDAL.class.getName()).log(Level.SEVERE, null, ex);
 		}

@@ -7,6 +7,10 @@ package com.ignacio.tienda.GUI.Ventanas;
 
 import com.ignacio.tienda.BLL.Comic;
 import com.ignacio.tienda.DAL.exception.CodigoRepetidoException;
+import com.ignacio.tienda.DAL.exception.SinBaseDatosException;
+import com.ignacio.tienda.GUI.ManejoErrorConexion;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -145,6 +149,8 @@ public class jPIngresoComic extends javax.swing.JPanel {
 				"El codigo ya esta utilizado",
 				"Codigo repetido",
 				JOptionPane.ERROR_MESSAGE);
+		} catch (SinBaseDatosException ex) {
+				ManejoErrorConexion.mostrar(this, ex);
 		}
 
     }//GEN-LAST:event_jB_guardarActionPerformed

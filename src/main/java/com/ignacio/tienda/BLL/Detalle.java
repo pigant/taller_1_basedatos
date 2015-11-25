@@ -6,6 +6,7 @@
 package com.ignacio.tienda.BLL;
 
 import com.ignacio.tienda.DAL.DetalleDAL;
+import com.ignacio.tienda.DAL.exception.SinBaseDatosException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,7 +19,7 @@ public class Detalle {
 
 	private static final Logger LOG = Logger.getLogger("main");
 
-	static ArrayList<Detalle> getAll(int codigo) {
+	static ArrayList<Detalle> getAll(int codigo) throws SinBaseDatosException {
 		return DetalleDAL.getAll(codigo);
 	}
 
@@ -79,11 +80,11 @@ public class Detalle {
 		this.venta = venta;
 	}
 
-	public static Detalle get(int id) {
+	public static Detalle get(int id) throws SinBaseDatosException {
 		return DetalleDAL.get(id);
 	}
 
-	public boolean guardar() {
+	public boolean guardar() throws SinBaseDatosException {
 		boolean s = false;
 		if (actualizar) {
 			LOG.log(Level.FINE, "Actualizando el detalle {0}", this);
@@ -113,7 +114,7 @@ public class Detalle {
 		return s;
 	}
 
-	public boolean borrar() {
+	public boolean borrar() throws SinBaseDatosException {
 		boolean s = false;
 		LOG.log(Level.FINE, "Eliminando el detalle {0}", this);
 		s = new DetalleDAL().borrar(idDetalle);

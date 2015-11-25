@@ -6,10 +6,11 @@
 package com.ignacio.tienda.GUI.Ventanas;
 
 import com.ignacio.tienda.BLL.Comic;
+import com.ignacio.tienda.DAL.exception.SinBaseDatosException;
+import com.ignacio.tienda.GUI.ManejoErrorConexion;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 /**
  *
@@ -100,7 +101,13 @@ public class JPBuscarComic extends javax.swing.JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 		String buscar = jTF_nombre.getText();
 		if (buscar.matches(".+")) {
-			ArrayList<Comic> a = Comic.find(buscar);
+			ArrayList<Comic> a;
+			try {
+				a = Comic.find(buscar);
+			} catch (SinBaseDatosException ex) {
+				ManejoErrorConexion.mostrar(this, ex);
+				return;
+			}
 			DefaultTableModel dtm
 				= (DefaultTableModel) jT_comics.getModel();
 			int cantidad = dtm.getRowCount();

@@ -9,14 +9,13 @@ import com.ignacio.tienda.BLL.Comic;
 import com.ignacio.tienda.BLL.VentaBuilder;
 import com.ignacio.tienda.DAL.ClienteNoExisteException;
 import com.ignacio.tienda.DAL.exception.CodigoRepetidoException;
+import com.ignacio.tienda.DAL.exception.SinBaseDatosException;
+import com.ignacio.tienda.GUI.ManejoErrorConexion;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.AbstractListModel;
-import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
-import javax.swing.ListModel;
-import javax.swing.event.ListDataListener;
 
 /**
  *
@@ -31,11 +30,15 @@ public class JPIngresoVenta extends javax.swing.JPanel {
 	 * Creates new form JPIngresoVenta
 	 */
 	public JPIngresoVenta() {
-		initComponents();
-		cu = new ComicsUtil(Comic.getAll());
-		cv = new ComicsUtil(new ArrayList<Comic>());
-		jL_bodega.setModel(cu);
-		jL_compra.setModel(cv);
+		try {
+			initComponents();
+			cu = new ComicsUtil(Comic.getAll());
+			cv = new ComicsUtil(new ArrayList<Comic>());
+			jL_bodega.setModel(cu);
+			jL_compra.setModel(cv);
+		} catch (SinBaseDatosException ex) {
+				ManejoErrorConexion.mostrar(this, ex);
+		}
 	}
 
 	/**
@@ -56,9 +59,9 @@ public class JPIngresoVenta extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jL_bodega = new javax.swing.JList<String>();
+        jL_bodega = new javax.swing.JList<>();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jL_compra = new javax.swing.JList<String>();
+        jL_compra = new javax.swing.JList<>();
         jB_traspaso = new javax.swing.JButton();
         jB_compra = new javax.swing.JButton();
 
@@ -155,9 +158,8 @@ public class JPIngresoVenta extends javax.swing.JPanel {
                     .addComponent(jB_traspaso)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
                     .addComponent(jScrollPane1))
-                .addGap(18, 18, 18)
-                .addComponent(jB_compra)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                .addComponent(jB_compra))
         );
 
         add(jPanel2, java.awt.BorderLayout.CENTER);
@@ -219,6 +221,9 @@ public class JPIngresoVenta extends javax.swing.JPanel {
 				"El codigo ya existe, intente con otro",
 				"Codigo ya existente",
 				JOptionPane.WARNING_MESSAGE);
+		} catch (SinBaseDatosException ex) {
+				ManejoErrorConexion.mostrar(this, ex);
+				return;
 		}
 		if (t) {
 			JOptionPane.showMessageDialog(this,
