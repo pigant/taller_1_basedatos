@@ -58,7 +58,7 @@ public class DetalleDAL {
 				int c_codigoComic = r.getInt("codigo");
 				String c_nombre = r.getString("nombre");
 				int c_numero = r.getInt("numero");
-				a.add(new Detalle(
+				a.add(new Detalle(id,
 						new Comic(c_codigoComic, c_nombre, c_numero)));
 			}
 			r.close();
