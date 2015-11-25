@@ -8,6 +8,7 @@ package com.ignacio.tienda.GUI;
 import com.ignacio.tienda.BLL.Cliente;
 import com.ignacio.tienda.BLL.Comic;
 import com.ignacio.tienda.GUI.Ventanas.JPBuscarComic;
+import com.ignacio.tienda.GUI.Ventanas.JPInforme;
 import com.ignacio.tienda.GUI.Ventanas.JPIngresoVenta;
 import com.ignacio.tienda.GUI.Ventanas.JPVerClientes;
 import com.ignacio.tienda.GUI.Ventanas.JPVerVenta;
@@ -52,8 +53,6 @@ public class JFrmPrincipal extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
@@ -133,29 +132,13 @@ public class JFrmPrincipal extends javax.swing.JFrame {
 
         jMenu2.setText("Informes");
 
-        jMenuItem5.setText("Revistas vendidas");
+        jMenuItem5.setText("Ver informe");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem5ActionPerformed(evt);
             }
         });
         jMenu2.add(jMenuItem5);
-
-        jMenuItem6.setText("Dinero obtenido");
-        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem6ActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jMenuItem6);
-
-        jMenuItem7.setText("Mejor cliente");
-        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem7ActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jMenuItem7);
 
         jMenuBar1.add(jMenu2);
 
@@ -208,31 +191,9 @@ public class JFrmPrincipal extends javax.swing.JFrame {
 	}
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-		String s = "Se han vendido un total de ";
-		s += Comic.findTotalRevistas();
-		s += " comics";
-		JOptionPane.showMessageDialog(this, s,
-			"Total vendido", JOptionPane.INFORMATION_MESSAGE);
+		JPInforme i = new JPInforme();
+		cambiarVentana(i);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
-
-    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-		String s = "Se han vendido un total de $";
-		s += Comic.findTotalRevistas() * 1000;
-		JOptionPane.showMessageDialog(this, s,
-			"Total vendido", JOptionPane.INFORMATION_MESSAGE);
-    }//GEN-LAST:event_jMenuItem6ActionPerformed
-
-    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-		String c = Cliente.findMejorCliente();
-		if (c != null) {
-			String s = "El mejor cliente es ";
-			JOptionPane.showMessageDialog(this, s + c,
-				"Mejor cliente", JOptionPane.INFORMATION_MESSAGE);
-		}else {
-			JOptionPane.showMessageDialog(this, "Aun sin un cliente regalon",
-				"Mejor cliente", JOptionPane.INFORMATION_MESSAGE);
-		}
-    }//GEN-LAST:event_jMenuItem7ActionPerformed
 
 	/**
 	 * @param args the command line arguments
@@ -285,8 +246,6 @@ public class JFrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JPanel jP_principal;
     // End of variables declaration//GEN-END:variables
 }
