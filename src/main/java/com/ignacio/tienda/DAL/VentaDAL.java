@@ -14,15 +14,15 @@ import java.util.logging.Logger;
  */
 public class VentaDAL {
 
-	public static Venta get(int id) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	public static Venta get(int id) throws SinBaseDatosException {
+		throw new UnsupportedOperationException("Aun no implementado");
 	}
 
 	public static ArrayList<Integer> findCodigosVenta() throws SinBaseDatosException {
 		ArrayList<Integer> a;
 		BD bd = new BD();
 		a = new ArrayList<>();
-		ArrayList<Object[]> codigos = bd.select("venta", 
+		ArrayList<Object[]> codigos = bd.select("venta",
 				"true order by idVenta DESC", "idVenta");
 		for (Object[] c : codigos) {
 			a.add((Integer) c[0]);
@@ -49,6 +49,17 @@ public class VentaDAL {
 			bd.update("update venta set rut=? where idVenta=?", rut, idVenta);
 		} catch (CodigoRepetidoException ex) {
 			Logger.getLogger(VentaDAL.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return s;
+	}
+
+	public boolean borrar(Integer idVenta) throws SinBaseDatosException {
+		boolean s = false;
+		BD bd = new BD();
+		try {
+			bd.update("delete from venta where idVenta=?", idVenta);
+		} catch (CodigoRepetidoException ex) {
+			//No aplica este error en este caso
 		}
 		return s;
 	}

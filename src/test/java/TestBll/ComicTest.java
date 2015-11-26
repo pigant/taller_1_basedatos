@@ -10,7 +10,13 @@ import com.ignacio.tienda.BLL.Comic;
 import com.ignacio.tienda.BLL.Detalle;
 import com.ignacio.tienda.BLL.Venta;
 import com.ignacio.tienda.BLL.VentaBuilder;
+import com.ignacio.tienda.DAL.exception.ClienteNoExisteException;
 import com.ignacio.tienda.DAL.exception.CodigoRepetidoException;
+import com.ignacio.tienda.DAL.exception.CompraNoExisteException;
+import com.ignacio.tienda.DAL.exception.SinBaseDatosException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -49,7 +55,7 @@ public class ComicTest {
 	// @Test
 	// public void hello() {}
 	@Test
-	public void CRUD() throws CodigoRepetidoException {
+	public void CRUD_comic() throws CodigoRepetidoException, SinBaseDatosException {
 		//Creacion
 		Comic c = new Comic("BatmanTest", 999);
 		assertTrue("No se guardo el comic", c.guardar());
@@ -67,7 +73,7 @@ public class ComicTest {
 	}
 
 	@Test
-	public void CRUD_cliente() throws CodigoRepetidoException {
+	public void CRUD_cliente() throws CodigoRepetidoException, ClienteNoExisteException, SinBaseDatosException {
 		//Creacion
 		Cliente c = new Cliente(17142732, "IgnacioTest");
 		assertTrue("No se guardo el cliente", c.guardar());
@@ -85,23 +91,34 @@ public class ComicTest {
 	}
 
 	@Test
-	public void venta() throws CodigoRepetidoException {
+	public void venta() throws SinBaseDatosException, CompraNoExisteException, CodigoRepetidoException, ClienteNoExisteException {
 		//creacion cliente
 		Cliente c = new Cliente(666, "IgnacioTest");
-		assertTrue("No se guardo el cliente", c.guardar());
+		try {
+			assertTrue("No se guardo el cliente", c.guardar());
+		} catch (CodigoRepetidoException ex) {
+			System.out.println("Ya existe el cliente con id 666, se eliminara");
+		}
 		Comic comic = new Comic("La caquita", 30);
-		assertTrue("No se creo el comic", comic.guardar());
-		Venta v = new Venta();
-		v.addDetalle(new Detalle(comic));
-		v.setCliente(c);
-		v.guardar();
+		comic.setCodigo(999);
+		try {
+			assertTrue("No se creo el comic", comic.guardar());
+		} catch (CodigoRepetidoException ex) {
+			System.out.println("Ya existe el comic con id 999, se eliminara");
+		}
+		ArrayList<Comic> a = new ArrayList<>(1);
+		a.add(comic);
+		int idVenta = 999;
+		boolean isCreado = VentaBuilder.crear(idVenta, c.getRut(), a);
+		assertTrue("No se creo la venta",isCreado);
 		//Obtiene la venta para visualizar
-		Venta vv = VentaBuilder.getVenta(v.getIdVenta());
+		Venta vv = VentaBuilder.getVenta(idVenta);
 		System.out.println("+++++++++++++++++++++++++++++++++++++++++++++");
 		System.out.println(vv);
 		System.out.println("+++++++++++++++++++++++++++++++++++++++++++++");
 		//borrado
 		c.borrar();
-		c.borrar();
+		comic.borrar();
+		vv.borrar();
 	}
 }

@@ -21,6 +21,9 @@ public class PanelTranscision extends JPanel {
 	int porAvanzar;
 	int x1, x2;
 
+	private final int AVANCE = 4;
+	private final int TIEMPO = 1;
+
 	@Override
 	public void paint(Graphics g) {
 		if (enTransicion) {
@@ -58,11 +61,11 @@ public class PanelTranscision extends JPanel {
 				@Override
 				public void run() {
 					while (x1 > porAvanzar) {
-						x1 -= 10;
-						x2 -= 10;
+						x1 -= AVANCE;
+						x2 -= AVANCE;
 						repaint();
 						try {
-							Thread.sleep(3);
+							Thread.sleep(TIEMPO);
 						} catch (InterruptedException ex) {
 							break;
 						}

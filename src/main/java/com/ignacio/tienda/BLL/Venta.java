@@ -70,15 +70,15 @@ public class Venta {
 		return s;
 	}
 
-	public boolean borrar() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	public boolean borrar() throws SinBaseDatosException {
+		return new VentaDAL().borrar(idVenta);
 	}
 
-	public static Venta get(final int id) {
+	public static Venta get(final int id) throws SinBaseDatosException {
 		return get(id, false);
 	}
 
-	public static Venta get(final int id, final boolean cache) {
+	public static Venta get(final int id, final boolean cache) throws SinBaseDatosException {
 		Venta v;
 		if (cache) {
 			if (ventas.containsKey(id)) {

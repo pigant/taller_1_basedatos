@@ -68,7 +68,7 @@ public class BD {
 					append(" from ").
 					append(tabla).append(" where ").
 					append(condicion);
-			System.out.println(sb.toString());
+			//System.out.println(sb.toString());
 			ResultSet r = c.createStatement().executeQuery(sb.toString());
 			ArrayList<Object[]> array = new ArrayList<>();
 			while (r.next()) {
