@@ -4,6 +4,7 @@ import com.ignacio.tienda.GUI.Ventanas.JPBuscarComic;
 import com.ignacio.tienda.GUI.Ventanas.JPInforme;
 import com.ignacio.tienda.GUI.Ventanas.JPIngresoVenta;
 import com.ignacio.tienda.GUI.Ventanas.JPVerClientes;
+import com.ignacio.tienda.GUI.Ventanas.JPBuscarVenta;
 import com.ignacio.tienda.GUI.Ventanas.JPVerVenta;
 import com.ignacio.tienda.GUI.Ventanas.JpIngresoCliente;
 import com.ignacio.tienda.GUI.Ventanas.jPIngresoComic;
@@ -40,9 +41,10 @@ public class JFrmPrincipal extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         jMI_clientes = new javax.swing.JMenuItem();
         jMI_comics = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
 
@@ -101,13 +103,13 @@ public class JFrmPrincipal extends javax.swing.JFrame {
         });
         jMenu3.add(jMI_comics);
 
-        jMenuItem4.setText("Venta");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem6.setText("Ventas");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
+                jMenuItem6ActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem4);
+        jMenu3.add(jMenuItem6);
 
         jMenuBar1.add(jMenu3);
 
@@ -120,6 +122,14 @@ public class JFrmPrincipal extends javax.swing.JFrame {
             }
         });
         jMenu4.add(jMenuItem1);
+
+        jMenuItem4.setText("Venta");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem4);
 
         jMenuBar1.add(jMenu4);
 
@@ -171,7 +181,7 @@ public class JFrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-		JPVerVenta v = new JPVerVenta();
+		JPBuscarVenta v = new JPBuscarVenta();
 		cambiarVentana(v);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
@@ -187,6 +197,11 @@ public class JFrmPrincipal extends javax.swing.JFrame {
 		JPInforme i = new JPInforme();
 		cambiarVentana(i);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+		JPVerVenta i = new JPVerVenta();
+		cambiarVentana(i);
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
 	/**
 	 * @param args the command line arguments
@@ -239,6 +254,7 @@ public class JFrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JPanel jP_principal;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,11 +1,9 @@
 package com.ignacio.tienda.BLL;
 
-import com.ignacio.tienda.DAL.BD;
 import com.ignacio.tienda.DAL.exception.ClienteNoExisteException;
 import com.ignacio.tienda.DAL.exception.CompraNoExisteException;
 import com.ignacio.tienda.DAL.exception.CodigoRepetidoException;
 import com.ignacio.tienda.DAL.exception.SinBaseDatosException;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,6 +26,7 @@ public class VentaBuilder {
 		salida = v.guardar();
 		return salida;
 	}
+
 
 	private Cliente c;
 	private ArrayList<Detalle> ld = new ArrayList();
@@ -55,16 +54,13 @@ public class VentaBuilder {
 	}
 
 	public static Venta getVenta(int codigo) throws CompraNoExisteException {
-		BD bd;
-		ResultSet r;
 		Cliente c;
 		Venta v = null;
 		try {
-			bd = new BD();
 			//Cliente
 			c = Cliente.findPorCompra(codigo);
 			//detalles
-			v = new Venta();
+			v = new Venta(codigo);
 			ArrayList<Detalle> d = Detalle.getAll(codigo);
 			for (Detalle detalle : d) {
 				v.addDetalle(detalle);
@@ -77,4 +73,22 @@ public class VentaBuilder {
 		return v;
 	}
 
+	public static ArrayList<Venta> getAll() throws SinBaseDatosException {
+		ArrayList<Venta> ventas = new ArrayList<>();
+		ArrayList<Integer> codigos = findCodigosVenta();
+		for (Integer c : codigos) {
+			try {
+				Venta v = getVenta(c);
+				ventas.add(v);
+			} catch (CompraNoExisteException ex) {
+			}
+		}
+		return ventas;
+	}
+
+	private static ArrayList<Integer> findCodigosVenta() throws SinBaseDatosException {
+		ArrayList<Integer> a = new ArrayList<>();
+		a = Venta.findCodigosVenta();
+		return a;
+	}
 }

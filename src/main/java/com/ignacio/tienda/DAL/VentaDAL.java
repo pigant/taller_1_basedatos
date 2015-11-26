@@ -4,6 +4,7 @@ import com.ignacio.tienda.BLL.Venta;
 import com.ignacio.tienda.DAL.exception.CodigoRepetidoException;
 import com.ignacio.tienda.DAL.exception.SinBaseDatosException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -15,6 +16,19 @@ public class VentaDAL {
 
 	public static Venta get(int id) {
 		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+
+	public static ArrayList<Integer> findCodigosVenta() throws SinBaseDatosException {
+		ArrayList<Integer> a;
+		BD bd = new BD();
+		a = new ArrayList<>();
+		ArrayList<Object[]> codigos = bd.select("venta", 
+				"true order by idVenta DESC", "idVenta");
+		for (Object[] c : codigos) {
+			a.add((Integer) c[0]);
+		}
+		bd.close();
+		return a;
 	}
 
 	public boolean guardar(int idVenta, int rut) throws CodigoRepetidoException, SinBaseDatosException {

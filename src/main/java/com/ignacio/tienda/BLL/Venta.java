@@ -13,12 +13,18 @@ import java.util.HashMap;
 public class Venta {
 
 	private static HashMap<Integer, Venta> ventas = new HashMap();
+
 	private Integer idVenta;
 	private Cliente c;
 	private ArrayList<Detalle> d = new ArrayList();
 	private boolean actualizar;
 
 	public Venta() {
+	}
+
+	public Venta(Integer codigo){
+		this.idVenta = codigo;
+		actualizar = true;
 	}
 
 	public Venta(final int idVenta, final Cliente c) {
@@ -106,6 +112,10 @@ public class Venta {
 	void addDetalle(int id, Detalle detalle) {
 		detalle.setIdDetalle(id);
 		addDetalle(detalle);
+	}
+
+	static ArrayList<Integer> findCodigosVenta() throws SinBaseDatosException {
+		return VentaDAL.findCodigosVenta();
 	}
 
 }
