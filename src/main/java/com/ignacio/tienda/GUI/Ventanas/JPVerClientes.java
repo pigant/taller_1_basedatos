@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ignacio.tienda.GUI.Ventanas;
 
 import com.ignacio.tienda.BLL.Cliente;
@@ -105,7 +100,7 @@ public class JPVerClientes extends javax.swing.JPanel {
 						JOptionPane.ERROR_MESSAGE);
 			}
 		} catch (SinBaseDatosException ex) {
-				ManejoErrorConexion.mostrar(this, ex);
+			ManejoErrorConexion.mostrar(this, ex);
 		}
     }//GEN-LAST:event_jB_verClienteActionPerformed
 

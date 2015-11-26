@@ -1,12 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ignacio.tienda.GUI;
 
-import com.ignacio.tienda.BLL.Cliente;
-import com.ignacio.tienda.BLL.Comic;
 import com.ignacio.tienda.GUI.Ventanas.JPBuscarComic;
 import com.ignacio.tienda.GUI.Ventanas.JPInforme;
 import com.ignacio.tienda.GUI.Ventanas.JPIngresoVenta;
@@ -15,8 +8,6 @@ import com.ignacio.tienda.GUI.Ventanas.JPVerVenta;
 import com.ignacio.tienda.GUI.Ventanas.JpIngresoCliente;
 import com.ignacio.tienda.GUI.Ventanas.jPIngresoComic;
 import com.ignacio.tienda.GUI.Ventanas.jPVerRevistas;
-import java.awt.Dimension;
-import javax.swing.JOptionPane;
 
 /**
  *
