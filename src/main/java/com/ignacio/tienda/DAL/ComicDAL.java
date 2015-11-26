@@ -45,14 +45,14 @@ public class ComicDAL {
 		BD bd = null;
 		try {
 			bd = new BD();
-			ResultSet r = bd.createStatement().executeQuery(
-					"select codigo, nombre, numero from comic");
-			while (r.next()) {
-				ac.add(new Comic(r.getInt("codigo"),
-						r.getString("nombre"),
-						r.getInt("codigo")));
+			try (ResultSet r = bd.createStatement().executeQuery(
+					"select codigo, nombre, numero from comic")) {
+				while (r.next()) {
+					ac.add(new Comic(r.getInt("codigo"),
+							r.getString("nombre"),
+							r.getInt("numero")));
+				}
 			}
-			r.close();
 		} catch (SQLException ex) {
 			Logger.getLogger(ComicDAL.class.getName()).log(Level.SEVERE, null, ex);
 		} finally {
